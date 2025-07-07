@@ -28,29 +28,43 @@ def get_jogar_time(time:str):
     for i in jogadores:
         if jogadores[i]["time"] == time:
             return jogadores[i]
-        return {"Dados":"Nao encontrado"}
+    return {"Dados":"Nao encontrado"}
 class jogador(BaseModel):
-    nom:str
+    nome:str
     idade:int
     time:str
 class atualiza_jogador(BaseModel):
-    nom:str
+    nome:str
     idade:int
     time:str
 @app.post("/inserir_jogador/{id_jogador}")
 def inserir_jogadores(id_jogador:int,jogador: jogador):
     if id_jogador in jogadores:
         return {"Mensagem":"Jogador ja existe"}
-    jogadores[id_jogador] = jogador
+    jogadores[id_jogador] = jogador.dict()
     return jogadores[id_jogador]
 class NoneJogaor(BaseModel):
-    nom:str = None
+    nome:str = None
     idade:int = None
-    tiem:str = None
+    time:str = None
 @app.delete("/deletear_jogadores{id_jogador}")
 def delete_jogador(id_jogador:int,jogador:NoneJogaor):
-    jogadores[id_jogador] = jogador
+    if id_jogador in jogadores:
+        del jogadores[id_jogador]
+        return{"mensagem":"Jogador Deletado"}
+    return {"mensagem":"Jogador nao encontrado"}
+
+     
+
 @app.put("/att_dados{id_jogador}")
-def att_dados(id_jogador:int,jogador:atualiza_jogador):
-    jogadore[id_jogador] = jogador    
-    
+def att_dados(id_jogador:int,jogador:atualiza_jogador,none:NoneJogaor):
+    if id_jogador not in jogadores:
+        return {"mensagem":"Jogador nao exitse"}
+    if none.nome is not None:
+        jogadores[id_jogador]["nome"] = none.nome
+    if none.idade is not None:
+        jogadores[id_jogador]["idade"] = none.idade
+    if none.time is not None:
+        jogadores[id_jogador]["time"] = none.time
+
+    return jogadores[id_jogador]
