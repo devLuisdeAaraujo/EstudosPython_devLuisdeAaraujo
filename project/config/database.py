@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from pymongo.errors import *
 
 class Conectar:
     def __init__(self):
