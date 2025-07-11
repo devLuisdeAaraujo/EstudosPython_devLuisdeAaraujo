@@ -6,10 +6,10 @@ cliente_app = [
     "http://localhost:3000"
 ]
 app.include_router(jogador_router)
-app.middleware(
+app.add_middleware(
     CORSMiddleware,
-    allow_origins = cliente_app,
-    allow_credential =True,
-    allow_methods =["*"],
-    allow_headers = ["*"]
+    allow_origins=cliente_app,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )

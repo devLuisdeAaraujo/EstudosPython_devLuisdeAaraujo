@@ -54,7 +54,6 @@ def delete_jogador(id_jogador:int,jogador:NoneJogaor):
         return{"mensagem":"Jogador Deletado"}
     return {"mensagem":"Jogador nao encontrado"}
 
-     
 
 @app.put("/att_dados{id_jogador}")
 def att_dados(id_jogador:int,jogador:atualiza_jogador,none:NoneJogaor):
