@@ -22,7 +22,7 @@ function App() {
 
   // Função para adicionar novo jogador
   const adicionarJogador = () => {
-    const id = Date.now(); // cria um ID temporário
+    const id = Date.now(); 
 
     axios.post(`http://127.0.0.1:8000/inserir_jogador/${id}`, {
       jogador_name: jogadorNome,
