@@ -47,7 +47,7 @@ async def atualizando_jogador(id_jogador:int,jogador:jogador):
     
     return listaJogadoresEntidade(([collection.find_one(atualizar)]))
 
-@jogador_router.patch("/jogadores/{id_jogador}/limpar_campos")
+@jogador_router.delete("/jogadores/{id_jogador}/limpar_campos")
 async def limpar_campos_do_jogador(id_jogador: int):
     jogador_removido = collection.find_one_and_delete({"_id": id_jogador})
 

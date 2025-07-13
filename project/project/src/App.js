@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
+import JogadorList from './componte/jogadorList';
 function App() {
   const [jogadorList, setJogadorList] = useState([]);
   const [jogadorNome, setJogadorNome] = useState('');
@@ -33,9 +33,10 @@ function App() {
         setJogadorNome('');
         setJogadorIdade('');
         setJogadorTime('');
-
+        return alert("Jogador cadastrado com sucess") 
         // Recarrega a lista
-        return axios.get('http://127.0.0.1:8000/jogadores');
+        
+        
       })
       .then(res => setJogadorList(res.data))
       .catch(err => console.log('Erro ao inserir jogador:', err));
@@ -72,11 +73,16 @@ function App() {
           <h5 className='text-center text-white bg-dark card mb-2'>
             Lista de jogadores
           </h5>
+          <div>
+            <JogadorList jogadorList={jogadorList}/>
+
+          </div>
 
           
+        
 
           <h6 className='text-center text-white bg-success card mb-2'>
-            &copy; First FastApi with React - 2025
+            &copy; CodeTI - 2025
           </h6>
         </div>
       </div>
