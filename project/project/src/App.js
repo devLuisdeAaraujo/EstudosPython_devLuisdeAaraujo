@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import JogadorList from './componte/jogadorList';
 function App() {
-  const [jogadorList, setJogadorList] = useState([]);
+  const [jogadorList, setJogadorList] = useState([{}]);
   const [jogadorNome, setJogadorNome] = useState('');
   const [jogadorIdade, setJogadorIdade] = useState('');
   const [jogadorTime, setJogadorTime] = useState('');
+  const [jogadorId,setJogadorId] =useState('');
 
   // Carrega lista de jogadores ao iniciar
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
     const id = Date.now(); 
 
     axios.post(`http://127.0.0.1:8000/inserir_jogador/${id}`, {
+      
       jogador_name: jogadorNome,
       jogador_idade: jogadorIdade,
       jogador_time: jogadorTime
@@ -34,7 +36,7 @@ function App() {
         setJogadorIdade('');
         setJogadorTime('');
         return alert("Jogador cadastrado com sucess") 
-        // Recarrega a lista
+        
         
         
       })
@@ -74,7 +76,14 @@ function App() {
             Lista de jogadores
           </h5>
           <div>
-            <JogadorList jogadorList={jogadorList}/>
+            <JogadorList jogadorList={jogadorList}
+            setJogadorId = {setJogadorId}
+            setJogadorNome = {setJogadorNome}
+            setJogadorIdade = {setJogadorIdade}
+            setJogadorTime = {setJogadorTime}
+
+            
+            />
 
           </div>
 

@@ -9,19 +9,33 @@ function Jogador(props){
                     alert("Jogador removido com sucesso"+respota.data)
                 }
             )
-    } 
+    }
+    const editaJogador = (jogador) =>{
+        props.setJogadorId(jogador.id)
+        props.setJogadorNome(jogador.nome)
+        props.setJogadorIdade(jogador.idade)
+        props.setJogadorTime(jogador.time)
+    }
     return (
         <div>
             <p>
                 <span className = 'fw-bold'>
                     {props.jogador.nome} -{props.jogador.idade}-{props.jogador.time}
                 </span>
+                  <button onClick= {()=> editaJogador(props.jogador)}className="btn sn">
+                    <span className="badge rounded-pill bg-info">
+                        Editar
+                    </span>
+
+                </button>
+                
                 <button onClick={()=> excluiJogador(props.jogador.id)} className="btn sn">
                     <span className="badge rounded-pill bg-danger">
                         X
                     </span>
 
                 </button>
+                
 
             </p>
         </div>
