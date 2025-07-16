@@ -33,7 +33,7 @@ async def inserir_jogadores(id_jogador:int,jogador:jogador):
         return listaJogadoresEntidade(collection.find())
     except DuplicateKeyError:
         raise HTTPException(status_code=400,detail="Document with this ID already exists.")
-@jogador_router.put("/atualizacaojogadores{id_jogador}")
+@jogador_router.put("/atualizacaojogadores/{id_jogador}")
 async def atualizando_jogador(id_jogador:int,jogador:jogador):
     atualizar= collection.find_one_and_update(
         {

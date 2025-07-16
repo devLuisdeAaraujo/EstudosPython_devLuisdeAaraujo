@@ -1,3 +1,4 @@
+
 def jogadorEntidade(db_item) -> dict:
     return {
         "id":str(db_item['_id']),
@@ -11,3 +12,5 @@ def listaJogadoresEntidade(db_item_lista) -> list:
     for item in db_item_lista:
         lista_jogadores.append(jogadorEntidade(item))
     return lista_jogadores
+
+

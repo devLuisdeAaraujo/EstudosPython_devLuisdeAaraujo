@@ -11,40 +11,59 @@ function App() {
   const [jogadorId,setJogadorId] =useState('');
 
   // Carrega lista de jogadores ao iniciar
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/jogadores')
-      .then(res => {
-        setJogadorList(res.data);
-      })
-      .catch(err => {
-        console.log('Erro ao buscar jogadores:', err);
-      });
-  }, []);
+  const buscarJogadores = () => {
+  axios.get('http://127.0.0.1:8000/jogadores')
+    .then(res => setJogadorList(res.data))
+    .catch(err => console.log('Erro ao buscar jogadores:', err));
+};
 
-  // Função para adicionar novo jogador
-  const adicionarJogador = () => {
-    const id = Date.now(); 
+useEffect(() => {
+  buscarJogadores();
+}, []);
 
-    axios.post(`http://127.0.0.1:8000/inserir_jogador/${id}`, {
-      
-      jogador_name: jogadorNome,
-      jogador_idade: jogadorIdade,
-      jogador_time: jogadorTime
+const adicionarJogador = (jogador) => {
+  const id = Date.now();
+  axios.post(`http://127.0.0.1:8000/inserir_jogador/${id}`, jogador)
+    .then(res => {
+      setJogadorNome('');
+      setJogadorIdade('');
+      setJogadorTime('');
+      setJogadorId('');
+      buscarJogadores();
+      alert("Jogador cadastrado com sucesso!");
     })
-      .then(res => {
-        setJogadorNome('');
-        setJogadorIdade('');
-        setJogadorTime('');
-        return alert("Jogador cadastrado com sucess") 
-        
-        
-        
-      })
-      .then(res => setJogadorList(res.data))
-      .catch(err => console.log('Erro ao inserir jogador:', err));
+    .catch(err => console.log('Erro ao inserir jogador:', err));
+};
+
+const atualizaJogador = (jogador) => {
+  axios.put(`http://127.0.0.1:8000/atualizacaojogadores/${jogadorId}`, jogador)
+    .then(() => {
+      alert("Jogador Atualizado com sucesso!");
+      buscarJogadores();
+      setJogadorNome('');
+      setJogadorIdade('');
+      setJogadorTime('');
+      setJogadorId('');
+    })
+    .catch(err => console.log(err));
+};
+
+const adicionarAtualizaJogador = () => {
+  const jogador = {
+    jogador_name: jogadorNome,
+    jogador_idade: jogadorIdade,
+    jogador_time: jogadorTime
   };
 
-  return (
+  if (jogadorId !== '') {
+    atualizaJogador(jogador);
+  } else {
+    adicionarJogador(jogador);
+  }
+};
+      
+
+ return (
     <div className='container'>
       <div
         className='mt-3 justify-content-center align-items-center mx-auto'
@@ -67,10 +86,9 @@ function App() {
             <input value={jogadorIdade} onChange={(e) => setJogadorIdade(e.target.value)} type='number' className='mb-2 form-control' placeholder='Informe a idade:' />
             <input value={jogadorTime} onChange={(e) => setJogadorTime(e.target.value)} type='text' className='mb-2 form-control' placeholder='Informe o Time:' />
           </span>
-
-          <button className='btn btn-outline-success mb-4' onClick={adicionarJogador}>
-            Cadastrar
-          </button>
+              <button className='btn btn-outline-success mb-4' onClick={adicionarAtualizaJogador}>
+                {jogadorId ? 'Atualizar' : 'Cadastrar'}
+              </button>
 
           <h5 className='text-center text-white bg-dark card mb-2'>
             Lista de jogadores
@@ -98,5 +116,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
